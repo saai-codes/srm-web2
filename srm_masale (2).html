@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>SRM Masale – मरळे बंधु मसालेवाले</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<style>
+/* ─── DARK THEME VARIABLES ─── */
+:root {
+  --bg:     #0D0804;
+  --bg2:    #161009;
+  --bg3:    #1F160A;
+  --bg4:    #2A1E0E;
+  --border: #3A2812;
+  --text:   #F2DFC8;
+  --text2:  #A8845A;
+  --text3:  #6A4E30;
+  --saffron:#E8621A;
+  --saffrL: #F07838;
+  --gold:   #F5A623;
+  --goldL:  #FABC50;
+  --red:    #B8340A;
+  --green:  #1E7A3A;
+}
+
+/* ─── RESET ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent}
+a{-webkit-tap-highlight-color:transparent}
+
+/* ─── SCROLL ANIMATION BASE ─── */
+.sa{opacity:0;transition:.65s cubic-bezier(.22,1,.36,1);transition-property:opacity,transform;will-change:opacity,transform}
+.sa.up{transform:translateY(40px)}
+.sa.left{transform:translateX(-50px)}
+.sa.right{transform:translateX(50px)}
+.sa.scale{transform:scale(.85)}
+.sa.vis{opacity:1!important;transform:none!important}
+
+/* ─── TOPBAR ─── */
+.topbar{background:#080503;color:var(--text2);text-align:center;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-bottom:1px solid var(--border);line-height:1.5}
+.topbar a{color:var(--goldL);text-decoration:none}
+
+/* ─── HEADER ─── */
+header{position:sticky;top:0;z-index:100;background:rgba(13,8,4,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);box-shadow:0 2px 30px rgba(0,0,0,.5)}
+.hdr{max-width:1360px;margin:0 auto;padding:0 20px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--border);transition:transform .3s}
+.logo:hover img{transform:rotate(6deg) scale(1.06)}
+.logo-name{font-family:'Bebas Neue';font-size:1.65rem;color:var(--gold);letter-spacing:.1em;display:block;line-height:1}
+.logo-sub{font-size:.5rem;color:var(--text2);letter-spacing:.12em;text-transform:uppercase;margin-top:2px;display:block}
+nav{display:flex;align-items:center;gap:2px}
+nav a{text-decoration:none;font-size:.68rem;font-weight:700;color:var(--text2);letter-spacing:.07em;text-transform:uppercase;padding:6px 9px;border-radius:6px;transition:color .2s;position:relative;white-space:nowrap}
+nav a::after{content:'';position:absolute;bottom:3px;left:9px;right:9px;height:2px;background:var(--saffron);border-radius:2px;transform:scaleX(0);transition:transform .25s;transform-origin:center}
+nav a:hover,nav a.act{color:var(--saffron)}
+nav a:hover::after,nav a.act::after{transform:scaleX(1)}
+.hdr-r{display:flex;gap:8px;align-items:center}
+.icn-btn{background:none;border:1.5px solid var(--border);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:.85rem;transition:border-color .2s,color .2s;flex-shrink:0}
+.icn-btn:hover{border-color:var(--saffron);color:var(--saffron)}
+.cart-btn{background:var(--saffron);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:6px;transition:background .2s,transform .15s,box-shadow .2s;flex-shrink:0;white-space:nowrap}
+.cart-btn:hover{background:var(--red);transform:translateY(-1px);box-shadow:0 6px 20px rgba(232,98,26,.35)}
+.cart-count{background:var(--gold);color:#1A0A02;border-radius:50%;width:18px;height:18px;font-size:.6rem;font-weight:900;display:flex;align-items:center;justify-content:center;min-width:18px}
+
+/* Hamburger */
+.ham-btn{display:none;background:none;border:1.5px solid var(--border);border-radius:8px;width:36px;height:36px;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0;flex-shrink:0}
+.ham-btn span{display:block;width:18px;height:2px;background:var(--text2);border-radius:2px;transition:all .3s}
+.ham-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Mobile nav drawer */
+.mob-nav{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(13,8,4,.98);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:99;padding:16px 20px 20px;flex-direction:column;gap:4px;transform:translateY(-8px);opacity:0;pointer-events:none;transition:all .25s cubic-bezier(.22,1,.36,1)}
+.mob-nav.open{transform:translateY(0);opacity:1;pointer-events:all}
+.mob-nav a{text-decoration:none;font-size:.85rem;font-weight:700;color:var(--text2);letter-spacing:.07em;text-transform:uppercase;padding:12px 14px;border-radius:10px;border:1px solid transparent;transition:all .2s;display:block}
+.mob-nav a:hover,.mob-nav a.act{color:var(--saffron);background:rgba(232,98,26,.08);border-color:rgba(232,98,26,.15)}
+.mob-nav-wa{background:linear-gradient(120deg,#0e5c40,#1a9050);color:#fff!important;border-color:transparent!important;margin-top:8px;display:flex!important;align-items:center;gap:8px;justify-content:center}
+
+/* ─── HERO ─── */
+.hero{position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 65% 50%,rgba(160,70,20,.45) 0%,transparent 65%),radial-gradient(ellipse 50% 70% at 15% 75%,rgba(90,35,8,.5) 0%,transparent 60%),linear-gradient(135deg,#0A0603 0%,#190D05 40%,#2E1408 70%,#3E1C0A 100%)}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(245,166,35,.07) 1px,transparent 1px);background-size:32px 32px}
+.hero-inner{max-width:1360px;margin:0 auto;padding:64px 20px 56px;position:relative;z-index:1;display:grid;grid-template-columns:1fr 300px;gap:60px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);color:var(--goldL);font-size:.62rem;font-weight:800;letter-spacing:.18em;padding:5px 14px;border-radius:30px;margin-bottom:18px;text-transform:uppercase}
+.hero h1{font-family:'Cormorant Garamond';font-size:clamp(2rem,4.5vw,3.6rem);font-weight:700;line-height:1.1;margin-bottom:14px}
+.hero h1 em{color:var(--goldL);font-style:italic}
+.hero-p{font-size:.86rem;line-height:1.8;color:rgba(242,223,200,.7);max-width:500px;margin-bottom:8px}
+.hero-mr{font-size:.78rem;color:rgba(245,166,35,.55);font-style:italic;margin-bottom:28px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--goldL));color:#1A0A02;border:none;padding:13px 28px;border-radius:8px;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s,box-shadow .2s}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(245,166,35,.35)}
+.btn-ghost{background:transparent;color:rgba(242,223,200,.85);border:1.5px solid rgba(255,255,255,.2);padding:13px 28px;border-radius:8px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:all .2s}
+.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
+.hero-logo-wrap{display:flex;align-items:center;justify-content:center}
+.hero-ring{width:260px;height:260px;border-radius:50%;border:1px solid rgba(245,166,35,.2);padding:8px;position:relative}
+.hero-ring::before{content:'';position:absolute;inset:-18px;border-radius:50%;border:1px solid rgba(245,166,35,.08)}
+.hero-ring img{width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 0 60px rgba(245,166,35,.18),0 20px 60px rgba(0,0,0,.5)}
+
+/* ─── TRUST STRIP ─── */
+.trust{background:#060402;border-top:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap}
+.ti{flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 12px;font-size:.65rem;font-weight:700;color:var(--goldL);letter-spacing:.09em;text-transform:uppercase;border-right:1px solid var(--border);transition:opacity .5s,transform .5s;opacity:0;transform:translateY(16px);text-align:center}
+.ti:last-child{border-right:none}
+.trust.vis .ti{opacity:1;transform:none}
+.trust.vis .ti:nth-child(1){transition-delay:.00s}
+.trust.vis .ti:nth-child(2){transition-delay:.08s}
+.trust.vis .ti:nth-child(3){transition-delay:.16s}
+.trust.vis .ti:nth-child(4){transition-delay:.24s}
+.trust.vis .ti:nth-child(5){transition-delay:.32s}
+
+/* ─── SECTION UTILS ─── */
+.wrap{max-width:1360px;margin:0 auto;padding:0 20px}
+.sec-lbl{font-size:.6rem;font-weight:800;letter-spacing:.22em;color:var(--saffron);text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.sec-lbl::before,.sec-lbl::after{content:'';width:24px;height:1.5px;background:var(--saffron);opacity:.4}
+.sec-h{font-family:'Cormorant Garamond';font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:700;color:var(--text);text-align:center;margin-bottom:8px}
+.sec-h span{color:var(--saffron);font-style:italic}
+.sec-d{font-size:.82rem;color:var(--text2);text-align:center;max-width:520px;margin:0 auto 32px;line-height:1.75}
+
+/* ─── CAT TABS ─── */
+.cat-section{padding:56px 20px 0;max-width:1360px;margin:0 auto}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.tab{background:var(--bg3);border:1.5px solid var(--border);color:var(--text2);font-size:.68rem;font-weight:700;padding:8px 18px;border-radius:30px;transition:all .2s;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+.tab:hover{border-color:var(--saffrL);color:var(--saffron)}
+.tab.act{background:var(--saffron);border-color:var(--saffron);color:#fff;box-shadow:0 4px 18px rgba(232,98,26,.3)}
+
+/* ─── DIVIDER ─── */
+.sdiv{display:flex;align-items:center;gap:16px;max-width:1360px;margin:52px auto 0;padding:0 20px}
+.sl{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.sc{background:var(--bg3);border:1.5px solid var(--border);border-radius:30px;padding:7px 16px;font-size:.63rem;font-weight:800;color:var(--text2);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+
+/* ─── PRODUCT SECTION ─── */
+.prod-sec{max-width:1360px;margin:0 auto;padding:24px 20px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:22px;gap:14px;flex-wrap:wrap}
+.sh-title{font-family:'Cormorant Garamond';font-size:clamp(1.4rem,2.8vw,2rem);font-weight:700;color:var(--text)}
+.sh-title .a{color:var(--saffron);font-style:italic}
+.sh-sub{font-size:.72rem;color:var(--text2);margin-top:4px}
+.va{color:var(--saffron);text-decoration:none;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1.5px solid rgba(232,98,26,.4);padding-bottom:2px;display:inline-flex;align-items:center;gap:5px;transition:gap .2s,border-color .2s;white-space:nowrap}
+.va:hover{gap:9px;border-color:var(--saffron)}
+
+/* ─── PRODUCT GRID ─── */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;padding-bottom:36px}
+
+.pcard{background:var(--bg3);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s ease,border-color .2s}
+.pcard:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.55),0 0 0 1px rgba(232,98,26,.14);border-color:rgba(232,98,26,.2)}
+
+.pimg{position:relative;aspect-ratio:1/1;background:linear-gradient(135deg,#1A0E05,#251505);overflow:hidden}
+.pimg img.pphoto{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.34,1.56,.64,1);display:block}
+.pcard:hover .pimg img.pphoto{transform:scale(1.08)}
+.pemoji{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.pcard:hover .pemoji{transform:scale(1.1) rotate(-4deg)}
+
+.pbadge{position:absolute;top:10px;left:10px;font-size:.56rem;font-weight:800;letter-spacing:.1em;padding:3px 9px;border-radius:20px;text-transform:uppercase}
+.b-sale{background:#C0392B;color:#fff}
+.b-new{background:#1E7A3A;color:#fff}
+.b-best{background:var(--gold);color:#1A0A02}
+
+.wbtn{position:absolute;top:9px;right:9px;background:rgba(20,12,4,.8);border:1px solid var(--border);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--text2);transition:transform .2s,background .2s}
+.wbtn:hover{transform:scale(1.15);background:var(--bg4)}
+.wbtn.liked{color:#e63946}
+
+.pbody{padding:13px 14px 16px;flex:1;display:flex;flex-direction:column}
+.pname{font-family:'Cormorant Garamond';font-size:1rem;font-weight:700;color:var(--text);margin-bottom:5px;line-height:1.3}
+.pstars{display:flex;align-items:center;gap:3px;margin-bottom:10px;font-size:.68rem;color:var(--gold)}
+.pstars span{color:var(--text3);font-size:.64rem}
+
+.ptable{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:12px}
+.prow{display:grid;grid-template-columns:18px 1fr auto;gap:8px;padding:7px 10px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background .18s}
+.prow:last-child{border-bottom:none}
+.prow:hover{background:rgba(232,98,26,.06)}
+.prow.sel{background:rgba(232,98,26,.1)}
+.pr-dot{width:15px;height:15px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .18s;display:flex;align-items:center;justify-content:center}
+.prow.sel .pr-dot{border-color:var(--saffron);background:var(--saffron)}
+.prow.sel .pr-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff}
+.pr-sz{font-size:.66rem;font-weight:800;color:var(--text2);letter-spacing:.04em}
+.prow.sel .pr-sz{color:var(--saffron)}
+.pr-r{display:flex;align-items:center;gap:4px;justify-content:flex-end;flex-wrap:wrap}
+.pr-p{font-size:.76rem;font-weight:800;color:var(--gold)}
+.pr-m{font-size:.58rem;color:var(--text3);text-decoration:line-through}
+.pr-s{font-size:.54rem;font-weight:800;background:rgba(30,122,58,.18);color:#4DC877;padding:2px 5px;border-radius:20px;white-space:nowrap}
+
+.add-btn{margin-top:auto;width:100%;background:var(--bg4);color:var(--text);border:1px solid var(--border);padding:10px 0;border-radius:8px;font-size:.71rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .2s,border-color .2s,transform .15s;min-height:40px}
+.add-btn:hover{background:var(--saffron);border-color:var(--saffron);color:#fff;transform:translateY(-1px)}
+.add-btn.done{background:var(--green);border-color:var(--green);color:#fff}
+
+/* Masale "Coming Soon" card */
+.pcard.cs-card .pimg{opacity:.7}
+.cs-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(13,8,4,.55)}
+.cs-label{background:var(--bg4);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:.6rem;font-weight:800;color:var(--text2);letter-spacing:.1em;text-transform:uppercase}
+.prow.cs-row{opacity:.5;pointer-events:none;cursor:default}
+.add-btn.cs-btn{opacity:.45;cursor:not-allowed;pointer-events:none}
+
+/* ─── ABOUT ─── */
+.about{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:72px 20px;margin-top:56px}
+.about-in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:240px 1fr;gap:60px;align-items:center}
+.about-l{display:flex;flex-direction:column;align-items:center;gap:16px}
+.about-l img{width:180px;height:180px;border-radius:50%;object-fit:cover;border:3px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.stats{display:flex;gap:12px}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:11px;padding:13px 12px;text-align:center;flex:1;opacity:0;transform:translateY(20px) scale(.95);transition:opacity .5s ease,transform .5s cubic-bezier(.34,1.56,.64,1)}
+.stats.vis .stat{opacity:1;transform:none}
+.stats.vis .stat:nth-child(2){transition-delay:.14s}
+.stat-n{font-family:'Cormorant Garamond';font-size:1.5rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-l{font-size:.58rem;font-weight:700;color:var(--text2);letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.about-r .sec-lbl{justify-content:flex-start}
+.about-r h2{font-family:'Cormorant Garamond';font-size:clamp(1.6rem,2.8vw,2.3rem);font-weight:700;color:var(--text);line-height:1.25;margin-bottom:14px}
+.about-r h2 em{color:var(--saffron);font-style:italic}
+.about-r p{font-size:.84rem;line-height:1.85;color:var(--text2);margin-bottom:11px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.pill{background:var(--bg3);border:1px solid var(--border);border-radius:30px;padding:7px 13px;font-size:.68rem;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px;opacity:0;transform:scale(.8) translateY(8px);transition:opacity .4s,transform .4s cubic-bezier(.34,1.56,.64,1),border-color .2s}
+.pills.vis .pill{opacity:1;transform:none}
+.pills.vis .pill:nth-child(1){transition-delay:.00s}
+.pills.vis .pill:nth-child(2){transition-delay:.07s}
+.pills.vis .pill:nth-child(3){transition-delay:.14s}
+.pills.vis .pill:nth-child(4){transition-delay:.21s}
+.pills.vis .pill:nth-child(5){transition-delay:.28s}
+.pill:hover{border-color:var(--saffron)}
+
+/* ─── TESTIMONIALS ─── */
+.testi{background:#060402;border-top:1px solid var(--border);padding:72px 20px}
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:36px auto 0}
+.tcard{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:22px;transition:background .2s,transform .2s,box-shadow .2s}
+.tcard:hover{background:var(--bg4);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.tq{font-family:'Cormorant Garamond';font-size:2rem;color:rgba(245,166,35,.25);line-height:1;margin-bottom:7px}
+.ts{color:var(--gold);font-size:.76rem;letter-spacing:2px;margin-bottom:8px}
+.tt{font-size:.82rem;line-height:1.75;color:var(--text2);font-style:italic;margin-bottom:15px}
+.thr{height:1px;background:var(--border);margin-bottom:12px}
+.ta{font-size:.76rem;font-weight:700;color:var(--goldL);letter-spacing:.04em}
+.tl{font-size:.64rem;color:var(--text3);margin-top:3px}
+
+/* ─── CONTACT ─── */
+.contact{padding:72px 20px;background:var(--bg)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:52px;max-width:1080px;margin:44px auto 0}
+.cinfo h3{font-family:'Cormorant Garamond';font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:9px}
+.cinfo>p{font-size:.82rem;color:var(--text2);line-height:1.8;margin-bottom:20px}
+.ccard{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;opacity:0;transform:translateX(-24px);transition:opacity .5s,transform .5s cubic-bezier(.22,1,.36,1),border-color .2s,box-shadow .2s}
+.cinfo.vis .ccard{opacity:1;transform:none}
+.cinfo.vis .ccard:nth-child(3){transition-delay:.04s}
+.cinfo.vis .ccard:nth-child(4){transition-delay:.1s}
+.cinfo.vis .ccard:nth-child(5){transition-delay:.16s}
+.cinfo.vis .ccard:nth-child(6){transition-delay:.22s}
+.ccard:hover{border-color:rgba(232,98,26,.3);box-shadow:0 6px 24px rgba(0,0,0,.3)}
+.ci{width:38px;height:38px;border-radius:9px;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.cl{font-size:.6rem;font-weight:800;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.cv{font-size:.82rem;font-weight:600;color:var(--text)}
+.wabtn{background:linear-gradient(120deg,#0e5c40,#1a9050);color:#fff;border:none;width:100%;padding:13px 16px;border-radius:11px;font-size:.77rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;transition:transform .15s,box-shadow .2s;min-height:44px}
+.wabtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,144,80,.25)}
+
+.fcard{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px}
+.fcard h3{font-family:'Cormorant Garamond';font-size:1.4rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.fcard>p{font-size:.77rem;color:var(--text2);margin-bottom:20px;line-height:1.6}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg label{font-size:.6rem;font-weight:800;color:var(--text2);letter-spacing:.1em;text-transform:uppercase}
+.fg input,.fg textarea,.fg select{background:var(--bg2);border:1.5px solid var(--border);border-radius:7px;padding:10px 12px;font-size:.82rem;color:var(--text);font-family:'Plus Jakarta Sans';outline:none;transition:border-color .2s,box-shadow .2s;width:100%;-webkit-appearance:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,98,26,.1);background:var(--bg3)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text3)}
+.fg select option{background:var(--bg3);color:var(--text)}
+.fg textarea{resize:vertical;min-height:88px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sbtn{width:100%;background:linear-gradient(135deg,var(--saffron),var(--saffrL));color:#fff;border:none;padding:13px;border-radius:8px;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;transition:transform .15s,box-shadow .2s;display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,26,.35)}
+
+/* ─── CART SIDEBAR ─── */
+.ov{position:fixed;inset:0;background:rgba(5,3,1,.75);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(5px)}
+.ov.open{opacity:1;pointer-events:all}
+.csb{position:fixed;top:0;right:0;height:100%;width:420px;max-width:100vw;background:var(--bg2);border-left:1px solid var(--border);z-index:201;transform:translateX(110%);transition:transform .38s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-16px 0 60px rgba(0,0,0,.6)}
+.csb.open{transform:translateX(0)}
+.cbh{background:var(--bg3);padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.cbh h3{font-family:'Cormorant Garamond';font-size:1.2rem;font-weight:700;color:var(--gold)}
+.cclose{background:rgba(255,255,255,.05);border:1px solid var(--border);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:.9rem;transition:background .2s,color .2s;flex-shrink:0}
+.cclose:hover{background:rgba(232,98,26,.2);color:var(--saffron)}
+.ctabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg3)}
+.ctab{flex:1;padding:11px;font-size:.68rem;font-weight:800;background:none;border:none;color:var(--text3);letter-spacing:.07em;text-transform:uppercase;position:relative;transition:color .2s}
+.ctab.act{color:var(--saffron)}
+.ctab.act::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--saffron)}
+.cp{flex:1;overflow-y:auto;display:none;flex-direction:column;-webkit-overflow-scrolling:touch}
+.cp.act{display:flex}
+.cempty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;padding:40px}
+.cempty span{font-size:3.5rem;opacity:.25}
+.cempty p{font-size:.87rem;font-weight:600;color:var(--text3)}
+.citems{padding:0 16px}
+.ci2{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.ciem{width:50px;height:50px;flex-shrink:0;background:var(--bg3);border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;overflow:hidden}
+.ciem img{width:100%;height:100%;object-fit:cover}
+.cin{flex:1;min-width:0}
+.cin-nm{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:2px;word-break:break-word}
+.cin-sz{display:inline-block;font-size:.6rem;font-weight:700;background:var(--bg4);color:var(--text2);padding:2px 7px;border-radius:9px;margin-bottom:4px}
+.cin-pr{font-size:.84rem;font-weight:800;color:var(--gold)}
+.cin-ctrl{display:flex;align-items:center;gap:8px;margin-top:5px}
+.qbtn{width:26px;height:26px;border-radius:5px;background:var(--bg4);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:var(--text);transition:background .18s,border-color .18s;min-width:26px}
+.qbtn:hover{background:var(--saffron);border-color:var(--saffron);color:#fff}
+.qv{font-size:.8rem;font-weight:800;color:var(--text);min-width:16px;text-align:center}
+.cdel{background:none;border:none;color:var(--text3);font-size:.95rem;padding:4px;transition:color .2s;flex-shrink:0}
+.cdel:hover{color:#e63946}
+.csum{padding:14px 16px;border-top:1px solid var(--border);background:var(--bg3)}
+.csrow{display:flex;justify-content:space-between;font-size:.76rem;color:var(--text2);margin-bottom:6px}
+.csrow.tot{font-size:.88rem;font-weight:800;color:var(--text);padding-top:9px;border-top:1px solid var(--border);margin-top:4px}
+.gochk{width:100%;background:var(--saffron);color:#fff;border:none;padding:12px;border-radius:8px;font-size:.76rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px;transition:background .2s;min-height:44px}
+.gochk:hover{background:var(--red)}
+.cop{flex:1;overflow-y:auto;display:none;-webkit-overflow-scrolling:touch}
+.cop.act{display:block}
+.cowrap{padding:16px}
+.bkbtn{background:none;border:none;color:var(--text3);font-size:.7rem;font-weight:700;display:flex;align-items:center;gap:4px;padding:0;margin-bottom:14px;letter-spacing:.05em;transition:color .2s}
+.bkbtn:hover{color:var(--saffron)}
+.cowrap h4{font-family:'Cormorant Garamond';font-size:1.12rem;font-weight:700;color:var(--text);margin-bottom:14px}
+.mnsum{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:12px 14px;margin-bottom:15px}
+.msr{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text2);padding:3px 0}
+.msr.tot{border-top:1px solid var(--border);padding-top:7px;margin-top:5px;font-size:.84rem;font-weight:800;color:var(--gold)}
+.cosec{font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin:14px 0 7px}
+.cog{margin-bottom:8px}
+.cog label{display:block;font-size:.58rem;font-weight:800;color:var(--text2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.cog input,.cog textarea,.cog select{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:7px;padding:9px 11px;font-size:.8rem;color:var(--text);font-family:'Plus Jakarta Sans';outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.cog input::placeholder,.cog textarea::placeholder{color:var(--text3)}
+.cog select option{background:var(--bg3);color:var(--text)}
+.cog input:focus,.cog textarea:focus,.cog select:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,98,26,.1);background:var(--bg3)}
+.cogrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.pobtn{width:100%;background:linear-gradient(135deg,var(--saffron),var(--saffrL));color:#fff;border:none;padding:13px;border-radius:8px;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:4px;transition:transform .15s,box-shadow .2s;min-height:44px}
+.pobtn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,26,.35)}
+.wabtn2{width:100%;background:#1a8a48;color:#fff;border:none;padding:11px;border-radius:8px;font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:9px;transition:transform .15s,box-shadow .2s;min-height:44px}
+.wabtn2:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,138,72,.25)}
+
+/* ─── ORDER SUCCESS MODAL ─── */
+.modov{position:fixed;inset:0;background:rgba(4,2,1,.88);z-index:300;display:flex;align-items:center;justify-content:center;padding:16px;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(10px)}
+.modov.open{opacity:1;pointer-events:all}
+.modbox{background:var(--bg3);border:1px solid var(--border);border-radius:22px;padding:36px 28px;max-width:460px;width:100%;text-align:center;position:relative;transform:scale(.88) translateY(24px);transition:transform .42s cubic-bezier(.34,1.56,.64,1);box-shadow:0 40px 80px rgba(0,0,0,.7);max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modov.open .modbox{transform:scale(1) translateY(0)}
+.mod-glow{position:absolute;inset:-1px;border-radius:22px;background:linear-gradient(135deg,rgba(232,98,26,.12),transparent,rgba(245,166,35,.08));pointer-events:none}
+.mod-icon{font-size:3.5rem;display:block;margin-bottom:16px;animation:pop .55s cubic-bezier(.34,1.56,.64,1) .15s both}
+@keyframes pop{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
+.mod-title{font-family:'Cormorant Garamond';font-size:1.75rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.mod-title em{color:var(--gold);font-style:italic}
+.mod-msg{font-size:.85rem;line-height:1.78;color:var(--text2);margin-bottom:18px}
+.mod-id{display:inline-block;background:var(--bg4);border:1px solid var(--border);border-radius:7px;padding:6px 16px;font-size:.74rem;font-weight:800;color:var(--gold);letter-spacing:.1em;margin-bottom:22px}
+.mod-steps{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;text-align:left}
+.mstep{display:flex;align-items:flex-start;gap:11px;background:var(--bg2);border:1px solid var(--border);border-radius:11px;padding:11px 14px}
+.msn{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));color:#1A0A02;font-size:.65rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.mst strong{display:block;font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.mst span{font-size:.74rem;color:var(--text2);line-height:1.45}
+.mod-ok{width:100%;background:var(--saffron);color:#fff;border:none;padding:13px;border-radius:9px;font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;transition:transform .15s,box-shadow .2s;min-height:44px}
+.mod-ok:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,98,26,.35)}
+
+/* ─── TOAST ─── */
+.toast{position:fixed;bottom:20px;right:16px;left:16px;background:var(--bg4);color:var(--text);border:1px solid var(--border);padding:12px 18px;border-radius:9px;font-size:.78rem;font-weight:700;box-shadow:0 10px 40px rgba(0,0,0,.55);z-index:400;display:flex;align-items:center;gap:8px;transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:420px;margin:0 auto}
+.toast.on{transform:translateY(0);opacity:1}
+
+/* ─── FOOTER ─── */
+footer{background:#060402;border-top:1px solid var(--border);padding:52px 20px 24px}
+.ftgrid{max-width:1360px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.fb .fn{font-family:'Bebas Neue';font-size:2rem;color:var(--gold);letter-spacing:.1em}
+.fb .fm{font-size:.63rem;color:var(--text3);letter-spacing:.13em;text-transform:uppercase;margin-bottom:12px;display:block}
+.fb img{width:64px;height:64px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:2px solid var(--border)}
+.fb p{font-size:.75rem;line-height:1.8;color:var(--text3);max-width:240px}
+.fsoc{display:flex;gap:8px;margin-top:16px}
+.fsb{width:34px;height:34px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.82rem;text-decoration:none;color:var(--text2);transition:background .2s,transform .2s,border-color .2s}
+.fsb:hover{background:var(--saffron);border-color:var(--saffron);transform:translateY(-2px)}
+.fc h4{font-family:'Cormorant Garamond';font-size:1rem;font-weight:700;color:var(--text);margin-bottom:13px}
+.fc ul{list-style:none}
+.fc li{margin-bottom:8px}
+.fc a{color:var(--text3);text-decoration:none;font-size:.74rem;transition:color .2s}
+.fc a:hover{color:var(--gold)}
+.fci{display:flex;gap:9px;font-size:.74rem;color:var(--text3);margin-bottom:9px;line-height:1.6}
+.fbot{max-width:1360px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:22px}
+.fbot p{font-size:.68rem;color:var(--text3);opacity:.5}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — TABLET  ≤ 1060px
+   ═══════════════════════════════════════ */
+@media(max-width:1060px){
+  nav{display:none}
+  .ham-btn{display:flex}
+  .mob-nav{display:flex}
+  .hdr{height:64px}
+  .mob-nav{top:64px}
+
+  .hero-inner{grid-template-columns:1fr}
+  .hero-logo-wrap{display:none}
+  .hero-inner{padding:52px 20px 48px}
+
+  .about-in{grid-template-columns:1fr}
+  .about-l{display:none}
+
+  .cgrid{grid-template-columns:1fr}
+
+  .tgrid{grid-template-columns:1fr 1fr}
+
+  .ftgrid{grid-template-columns:1fr 1fr;gap:32px}
+
+  .cogrid{grid-template-columns:1fr 1fr}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — MOBILE  ≤ 640px
+   ═══════════════════════════════════════ */
+@media(max-width:640px){
+  /* Topbar */
+  .topbar{font-size:.62rem;padding:7px 12px}
+
+  /* Header */
+  .hdr{padding:0 14px;height:60px;gap:8px}
+  .mob-nav{top:60px}
+  .logo img{width:40px;height:40px}
+  .logo-name{font-size:1.4rem}
+  .logo-sub{display:none}
+  .icn-btn{display:none}
+  .cart-btn{padding:7px 13px;font-size:.68rem;gap:5px}
+
+  /* Hero */
+  .hero-inner{padding:40px 14px 40px}
+  .hero-tag{font-size:.58rem;padding:4px 12px;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.75rem,7vw,2.4rem)}
+  .hero-p{font-size:.82rem}
+  .hero-mr{font-size:.75rem}
+  .hero-btns{flex-direction:column;gap:10px}
+  .btn-gold,.btn-ghost{width:100%;text-align:center;padding:14px 20px;font-size:.8rem}
+
+  /* Trust */
+  .trust{display:grid;grid-template-columns:1fr 1fr}
+  .ti{border-right:1px solid var(--border);min-width:0;padding:11px 8px;font-size:.6rem;letter-spacing:.06em}
+  .ti:nth-child(2){border-right:none}
+  .ti:nth-child(4){border-right:none}
+  .ti:nth-child(5){grid-column:1/-1;border-right:none;border-top:1px solid var(--border)}
+
+  /* Category tabs */
+  .cat-section{padding:40px 14px 0}
+  .tabs{gap:7px}
+  .tab{font-size:.64rem;padding:7px 14px}
+
+  /* Section helpers */
+  .wrap{padding:0 14px}
+  .sec-d{font-size:.78rem;margin-bottom:24px}
+
+  /* Product section */
+  .prod-sec{padding:20px 14px 0}
+  .pgrid{grid-template-columns:1fr 1fr;gap:12px}
+  .pname{font-size:.92rem}
+  .pstars{font-size:.62rem;margin-bottom:8px}
+  .ptable{margin-bottom:10px}
+  .prow{padding:6px 9px;gap:6px}
+  .pr-sz{font-size:.6rem}
+  .pr-p{font-size:.7rem}
+  .pr-m,.pr-s{display:none}
+  .pbody{padding:11px 11px 13px}
+  .add-btn{font-size:.66rem;padding:9px 0;gap:5px}
+  .pbadge{font-size:.52rem;padding:2px 7px}
+  .wbtn{width:30px;height:30px;font-size:.85rem}
+  .sdiv{margin:40px auto 0;padding:0 14px}
+
+  /* About */
+  .about{padding:52px 14px}
+  .about-r h2{font-size:clamp(1.5rem,6vw,2rem)}
+  .about-r p{font-size:.8rem}
+
+  /* Testimonials */
+  .testi{padding:52px 14px}
+  .tgrid{grid-template-columns:1fr}
+
+  /* Contact */
+  .contact{padding:52px 14px}
+  .cgrid{gap:28px;margin-top:28px}
+  .frow{grid-template-columns:1fr}
+  .fcard{padding:22px 18px}
+
+  /* Cart sidebar */
+  .csb{width:100%;border-left:none;border-top:1px solid var(--border)}
+  .cogrid{grid-template-columns:1fr}
+
+  /* Footer */
+  .ftgrid{grid-template-columns:1fr;gap:28px;padding-bottom:32px}
+  .fb p{max-width:100%}
+  .fbot{flex-direction:column;align-items:center;text-align:center;gap:6px}
+
+  /* Toast */
+  .toast{bottom:16px;right:12px;left:12px;font-size:.74rem}
+
+  /* Modal */
+  .modbox{padding:28px 20px;border-radius:18px}
+  .mod-title{font-size:1.55rem}
+  .mod-msg{font-size:.8rem}
+  .mst strong{font-size:.75rem}
+  .mst span{font-size:.7rem}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE — VERY SMALL  ≤ 380px
+   ═══════════════════════════════════════ */
+@media(max-width:380px){
+  .pgrid{grid-template-columns:1fr}
+  .logo-name{font-size:1.25rem}
+  .cart-btn span:not(.cart-count){display:none}
+  .trust{display:flex;flex-direction:column}
+  .ti{border-right:none;border-bottom:1px solid var(--border)}
+  .ti:last-child{border-bottom:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">🌿 Free shipping above ₹499 &nbsp;·&nbsp; 100% Pure & Natural &nbsp;·&nbsp; <a href="https://wa.me/919876543210" target="_blank">Order on WhatsApp ↗</a></div>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <a class="logo" href="#">
+      <img src="srm.jpeg" alt="SRM"/>
+      <div><span class="logo-name">SRM Masale</span><span class="logo-sub">मरळे बंधु मसालेवाले</span></div>
+    </a>
+    <nav>
+      <a href="#" class="act">Home</a>
+      <a href="#mirchi">Mirchi</a>
+      <a href="#masale">Masale</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="hdr-r">
+      <button class="ham-btn" id="hamBtn" onclick="toggleMobNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <button class="icn-btn">🔍</button>
+      <button class="cart-btn" onclick="openCart()">🛒 <span>Cart</span> <div class="cart-count" id="cc">0</div></button>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mobNav">
+  <a href="#" onclick="closeMobNav()" class="act">🏠 Home</a>
+  <a href="#mirchi" onclick="closeMobNav()">🌶️ Mirchi</a>
+  <a href="#masale" onclick="closeMobNav()">🍂 Masale</a>
+  <a href="#about" onclick="closeMobNav()">📖 About</a>
+  <a href="#contact" onclick="closeMobNav()">📞 Contact</a>
+  <a href="https://wa.me/919876543210" target="_blank" class="mob-nav-wa">💬 Order on WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div id="particles" style="position:absolute;inset:0;pointer-events:none;z-index:0"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag sa up" style="transition-delay:.1s">✦ मरळे बंधु मसालेवाले — Pune</div>
+      <h1 class="sa up" style="transition-delay:.22s">Flavours of India,<br/><em>Ground with Tradition</em></h1>
+      <p class="hero-p sa up" style="transition-delay:.34s">Adulteration is rampant — artificial colours, husk powder, starch fillers. SRM Masale was born to change that. We source directly from spice farms and grind in small batches for maximum aroma and purity.</p>
+      <p class="hero-mr sa up" style="transition-delay:.44s">सुगंध आणि स्वाद — यांचा सोन्याचा संगम।</p>
+      <div class="hero-btns sa up" style="transition-delay:.54s">
+        <button class="btn-gold" onclick="document.getElementById('mirchi').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+        <button class="btn-ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Our Story</button>
+      </div>
+    </div>
+    <div class="hero-logo-wrap">
+      <div class="hero-ring sa scale" style="transition-delay:.4s">
+        <img src="srm.jpeg" alt="SRM Masale"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust" id="trust">
+  <div class="ti">🌿 100% Pure & Natural</div>
+  <div class="ti">🏡 Farm Direct Sourcing</div>
+  <div class="ti">🚚 Free Shipping ₹499+</div>
+  <div class="ti">⚗️ Lab Tested Quality</div>
+  <div class="ti">🔄 Easy Returns</div>
+</div>
+
+<!-- CATEGORY FILTER -->
+<div class="cat-section">
+  <div class="sec-lbl sa up">Browse Collections</div>
+  <h2 class="sec-h sa up" style="transition-delay:.1s">Our <span>Spice Collections</span></h2>
+  <p class="sec-d sa up" style="transition-delay:.2s">Stone-ground, small-batch spices and masalas bringing authentic Indian flavours to your kitchen.</p>
+  <div class="tabs sa up" style="transition-delay:.3s" id="tabs">
+    <button class="tab act" onclick="filterCat('all',this)">All Products</button>
+    <button class="tab" onclick="filterCat('mirchi',this)">🌶️ Mirchi</button>
+    <button class="tab" onclick="filterCat('masale',this)">🍂 Masale Powders</button>
+  </div>
+</div>
+
+<!-- MIRCHI -->
+<section id="mirchi">
+  <div class="prod-sec" style="padding-top:44px">
+    <div class="sec-head sa up">
+      <div><div class="sh-title">🌶️ <span class="a">Mirchi</span></div><div class="sh-sub">From fiery hot to deep Kashmiri red — 100% pure whole & ground chillies</div></div>
+      <a href="#" class="va">View All →</a>
+    </div>
+    <div class="pgrid" id="g-mirchi"></div>
+  </div>
+</section>
+
+<!-- MASALE -->
+<section id="masale">
+  <div class="sdiv sa up"><div class="sl"></div><div class="sc">🍂 Masale Powders</div><div class="sl"></div></div>
+  <div class="prod-sec">
+    <div class="sec-head sa up">
+      <div><div class="sh-title">🍂 <span class="a">Masale</span> Powders</div><div class="sh-sub">Turmeric, coriander, cumin, garam masala — freshly ground</div></div>
+      <a href="#" class="va">View All →</a>
+    </div>
+    <div class="pgrid" id="g-masale"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-in">
+      <div class="about-l sa scale">
+        <img src="srm.jpeg" alt="SRM Masale"/>
+        <div class="stats" id="stats">
+          <div class="stat"><div class="stat-n" data-t="500">0+</div><div class="stat-l">Customers</div></div>
+          <div class="stat"><div class="stat-n" data-t="100">0%</div><div class="stat-l">Pure & Natural</div></div>
+        </div>
+      </div>
+      <div class="about-r">
+        <div class="sec-lbl" style="justify-content:flex-start">Our Promise</div>
+        <h2 class="sa up" style="transition-delay:.1s">Why Choose<br/><em>SRM Masale?</em></h2>
+        <p class="sa up" style="transition-delay:.2s">Many producers mix husk powder into chilli, add artificial colours to turmeric, pad masalas with cheap fillers. <strong>SRM Masale — मरळे बंधु मसालेवाले</strong> was founded to provide 100% authentic spices sourced straight from India's spice gardens.</p>
+        <p class="sa up" style="transition-delay:.3s">We grind in small batches to preserve freshness and aroma. Order now and taste the difference.</p>
+        <div class="pills" id="pills">
+          <div class="pill">🌿 No Artificial Colours</div>
+          <div class="pill">🏡 Farm Direct</div>
+          <div class="pill">⚗️ Lab Tested</div>
+          <div class="pill">🔒 Sealed Freshness</div>
+          <div class="pill">📦 Small Batch</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<div class="testi">
+  <div class="wrap" style="padding-top:0;padding-bottom:0">
+    <div class="sec-lbl sa up" style="color:var(--goldL)">Customer Love</div>
+    <h2 class="sec-h sa up" style="transition-delay:.1s;color:var(--text)">What Our Customers Say</h2>
+    <div class="tgrid">
+      <div class="tcard sa up"><div class="tq">"</div><div class="ts">★★★★★</div><p class="tt">The chilli powder is unlike anything I've bought. The colour, the aroma — you can tell it's pure. My curries have never tasted better!</p><div class="thr"></div><div class="ta">Sunita Deshmukh</div><div class="tl">📍 Pune, Maharashtra</div></div>
+      <div class="tcard sa up" style="transition-delay:.15s"><div class="tq">"</div><div class="ts">★★★★★</div><p class="tt">Finally a masala brand from Pune I can trust. The Garam Masala is incredibly fragrant. I've stopped buying from supermarkets completely.</p><div class="thr"></div><div class="ta">Rahul Patil</div><div class="tl">📍 Nashik, Maharashtra</div></div>
+      <div class="tcard sa up" style="transition-delay:.3s"><div class="tq">"</div><div class="ts">★★★★☆</div><p class="tt">The Kashmiri Chilli gives such a beautiful deep red colour without being too hot. My family loves it. Will definitely reorder!</p><div class="thr"></div><div class="ta">Priya Kulkarni</div><div class="tl">📍 Mumbai, Maharashtra</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact">
+    <div class="wrap" style="padding-top:0;padding-bottom:0;max-width:1080px">
+      <div class="sec-lbl sa up">Get in Touch</div>
+      <h2 class="sec-h sa up" style="transition-delay:.1s">We'd Love to <span>Hear from You</span></h2>
+      <p class="sec-d sa up" style="transition-delay:.2s">Questions, bulk orders, or just want to say hello? We'll get back to you within 24 hours.</p>
+    </div>
+    <div class="cgrid">
+      <div class="cinfo" id="cinfo">
+        <h3>Contact Information</h3>
+        <p>Visit us, call us, or drop a message. We're always happy to help.</p>
+        <div class="ccard"><div class="ci">📍</div><div><div class="cl">Address</div><div class="cv">22/B, Spice Market Road, Pune, MH – 411001</div></div></div>
+        <div class="ccard"><div class="ci">📧</div><div><div class="cl">Email</div><div class="cv">care@srmmasale.in</div></div></div>
+        <div class="ccard"><div class="ci">📞</div><div><div class="cl">Phone</div><div class="cv">+91-98765-43210</div></div></div>
+        <div class="ccard"><div class="ci">🕐</div><div><div class="cl">Hours</div><div class="cv">Mon – Sat: 9:00 AM – 7:00 PM</div></div></div>
+        <button class="wabtn" onclick="window.open('https://wa.me/919876543210','_blank')">💬 Chat on WhatsApp</button>
+      </div>
+      <div class="sa right" style="transition-delay:.15s">
+        <div class="fcard">
+          <h3>Send us a Message</h3>
+          <p>We'll reply within 24 hours.</p>
+          <form action="https://formspree.io/f/xgonrlog" method="POST" onsubmit="handleContact(event)">
+            <div class="frow">
+              <div class="fg" style="margin-bottom:0"><label>First Name *</label><input type="text" name="first_name" placeholder="Rahul" required/></div>
+              <div class="fg" style="margin-bottom:0"><label>Last Name</label><input type="text" name="last_name" placeholder="Patil"/></div>
+            </div>
+            <div class="frow" style="margin-top:11px">
+              <div class="fg" style="margin-bottom:0"><label>Email *</label><input type="email" name="email" placeholder="you@email.com" required/></div>
+              <div class="fg" style="margin-bottom:0"><label>Phone</label><input type="tel" name="phone" placeholder="+91 98765 43210"/></div>
+            </div>
+            <div class="fg" style="margin-top:11px">
+              <label>Subject</label>
+              <select name="subject">
+                <option value="">Select topic...</option>
+                <option>Product Enquiry</option>
+                <option>Bulk / Wholesale Order</option>
+                <option>Order Status</option>
+                <option>Return / Refund</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="fg"><label>Message *</label><textarea name="message" placeholder="Tell us how we can help..." required></textarea></div>
+            <button type="submit" class="sbtn">📨 Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftgrid">
+    <div class="fb">
+      <img src="srm.jpeg" alt="SRM"/>
+      <div class="fn">SRM Masale</div>
+      <span class="fm">मरळे बंधु मसालेवाले</span>
+      <p>Pure spices and masala powders from the finest spice farms across India — delivered fresh to your doorstep.</p>
+      <div class="fsoc">
+        <a class="fsb" href="#">f</a>
+        <a class="fsb" href="#">📸</a>
+        <a class="fsb" href="https://wa.me/919876543210" target="_blank">💬</a>
+      </div>
+    </div>
+    <div class="fc">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">My Account</a></li>
+        <li><a href="#" onclick="openCart()">Cart</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>Policies</h4>
+      <ul>
+        <li><a href="#">Refund & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h4>Contact Us</h4>
+      <div class="fci">📍 <span>22/B Spice Market Road, Pune MH – 411001</span></div>
+      <div class="fci">📧 <span>care@srmmasale.in</span></div>
+      <div class="fci">📞 <span>+91-98765-43210</span></div>
+      <div class="fci">🕐 <span>Mon – Sat: 9 AM – 7 PM</span></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2026 SRM Masale – मरळे बंधु मसालेवाले. All rights reserved.</p>
+    <p>Made with ❤️ in Pune, India</p>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- OVERLAY -->
+<div class="ov" id="ov" onclick="closeCart()"></div>
+
+<!-- CART SIDEBAR -->
+<div class="csb" id="csb">
+  <div class="cbh">
+    <h3>🛒 Your Cart</h3>
+    <button class="cclose" onclick="closeCart()">✕</button>
+  </div>
+  <div class="ctabs">
+    <button class="ctab act" id="ctab-cart" onclick="switchTab('cart')">Cart Items</button>
+    <button class="ctab" id="ctab-chk" onclick="switchTab('chk')">Checkout</button>
+  </div>
+  <div class="cp act" id="p-cart">
+    <div id="cartItems"></div>
+    <div class="csum" id="csum" style="display:none">
+      <div class="csrow"><span>Subtotal</span><span id="s-sub">₹0</span></div>
+      <div class="csrow"><span>Shipping</span><span id="s-ship">—</span></div>
+      <div class="csrow tot"><span>Total</span><span id="s-tot">₹0</span></div>
+      <button class="gochk" onclick="switchTab('chk')">Proceed to Checkout →</button>
+    </div>
+  </div>
+  <div class="cop" id="p-chk">
+    <div class="cowrap">
+      <button class="bkbtn" onclick="switchTab('cart')">← Back to Cart</button>
+      <h4>Complete Your Order</h4>
+      <div class="mnsum" id="mnsum"></div>
+      <div class="cosec">Delivery Details</div>
+      <div class="cogrid">
+        <div class="cog"><label>Full Name *</label><input id="co-name" placeholder="Your full name"/></div>
+        <div class="cog"><label>Phone *</label><input id="co-phone" placeholder="+91 XXXXX XXXXX"/></div>
+      </div>
+      <div class="cog"><label>Email</label><input type="email" id="co-email" placeholder="you@email.com"/></div>
+      <div class="cog"><label>Delivery Address *</label><textarea id="co-addr" placeholder="Flat, Street, Area..." style="min-height:65px"></textarea></div>
+      <div class="cogrid">
+        <div class="cog"><label>City *</label><input id="co-city" placeholder="Pune"/></div>
+        <div class="cog"><label>PIN Code *</label><input id="co-pin" placeholder="411001" maxlength="6"/></div>
+      </div>
+      <div class="cosec">Payment Method</div>
+      <div class="cog">
+        <label>Pay via</label>
+        <select id="co-pay">
+          <option value="cod">Cash on Delivery (COD)</option>
+          <option value="upi">UPI / PhonePe / GPay</option>
+          <option value="bank">Bank Transfer / NEFT</option>
+        </select>
+      </div>
+      <div class="cog"><label>Special Instructions</label><textarea id="co-note" placeholder="Any delivery instructions..." style="min-height:52px"></textarea></div>
+      <button class="pobtn" onclick="placeOrder()">✅ Place Order</button>
+      <button class="wabtn2" onclick="orderWA()">💬 Order via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS MODAL -->
+<div class="modov" id="modov">
+  <div class="modbox">
+    <div class="mod-glow"></div>
+    <span class="mod-icon">🎉</span>
+    <div class="mod-title">Order <em>Confirmed!</em></div>
+    <p class="mod-msg">Thank you for choosing <strong>SRM Masale</strong>! Your order has been received. Our team will contact you shortly to confirm everything.</p>
+    <div class="mod-id" id="mod-oid">ORDER #SRM-00000</div>
+    <div class="mod-steps">
+      <div class="mstep">
+        <div class="msn">1</div>
+        <div class="mst">
+          <strong>We will call you soon</strong>
+          <span>Our team will contact you on your phone within 1–2 hours to confirm your order.</span>
+        </div>
+      </div>
+      <div class="mstep">
+        <div class="msn">2</div>
+        <div class="mst">
+          <strong>Packed fresh for you</strong>
+          <span>Your spices are ground and packed fresh in small batches for maximum aroma.</span>
+        </div>
+      </div>
+      <div class="mstep">
+        <div class="msn">3</div>
+        <div class="mst">
+          <strong>Delivered to your door</strong>
+          <span>Expect delivery within 2–4 business days. Tracking details sent via WhatsApp.</span>
+        </div>
+      </div>
+    </div>
+    <button class="mod-ok" onclick="closeModal()">✓ Got it, Thanks!</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// PRODUCT DATA
+// ═══════════════════════════════════════════
+const PRODS = {
+  mirchi:[
+    {id:1,  name:"Chilly Powder",       img:"images/guntur.jpg",       badge:null,  r:4.2,rv:34, prices:[{s:"100g",p:60,m:75},{s:"250g",p:130,m:160},{s:"500g",p:240,m:290},{s:"1kg",p:440,m:540}]},
+    {id:2,  name:"Kashmiri Chilly",     img:"images/kashmiri.jfif",    badge:"Sale",r:4.5,rv:21, prices:[{s:"100g",p:75,m:90},{s:"250g",p:170,m:210},{s:"500g",p:310,m:390}]},
+    {id:3,  name:"Bedgi Chilly",        img:"images/bedgi.jfif",       badge:"New", r:4.3,rv:15, prices:[{s:"100g",p:80,m:95},{s:"250g",p:180,m:220},{s:"500g",p:330,m:400}]},
+    {id:4,  name:"Sankeshwari Chilly",  img:"images/sankeshwari.webp", badge:null,  r:4.4,rv:18, prices:[{s:"100g",p:85,m:100},{s:"250g",p:195,m:235},{s:"500g",p:360,m:430}]},
+  ],
+  masale:[
+    {id:5,  name:"Turmeric Powder",       img:"images/Turmeric-Powder-2.jpg",  e:"🟡", badge:"Best",r:4.7,rv:56, prices:[{s:"100g",p:55,m:70},{s:"250g",p:120,m:150},{s:"500g",p:220,m:270}]},
+    {id:6,  name:"Coriander Powder",      img:"images/coriander_powder.jpg",   e:"🟢", badge:null, r:4.3,rv:18, prices:[{s:"100g",p:45,m:60},{s:"250g",p:100,m:130},{s:"500g",p:190,m:240}]},
+    {id:7,  name:"Cumin Powder",          img:"images/cumin-powder.jpg",       e:"🤎", badge:null, r:4.1,rv:12, prices:[{s:"100g",p:65,m:80},{s:"250g",p:145,m:180},{s:"500g",p:270,m:330}]},
+    {id:8,  name:"Garam Masala",          img:"images/garam_masala.jpg",       e:"🫚", badge:"Best",r:5.0,rv:1,  prices:[{s:"100g",p:90,m:110},{s:"250g",p:200,m:250}]},
+    {id:9,  name:"Ginger Powder",         img:"images/ginger.webp",            e:"🫚", badge:"New",r:4.4,rv:9,  prices:[{s:"100g",p:60,m:75},{s:"250g",p:130,m:165}]},
+    {id:10, name:"Green Cardamom Powder", img:"images/green_cardamom.png",     e:"💚", badge:null, r:4.8,rv:7,  prices:[{s:"50g",p:120,m:150},{s:"100g",p:220,m:275}]},
+    {id:11, name:"White Pepper Powder",   img:"images/white-pepper-copy.webp", e:"⚪", badge:null, r:5.0,rv:1,  prices:[{s:"50g",p:95,m:120},{s:"100g",p:175,m:220}]},
+    {id:12, name:"Cinnamon Powder",       img:"images/cinnamon_powder.jpg",    e:"🟫", badge:null, r:4.2,rv:14, prices:[{s:"50g",p:80,m:100},{s:"100g",p:150,m:190}]},
+    {id:13, name:"Black Pepper Powder",   img:"images/black_pepper.jpg",       e:"⚫", badge:null, r:4.6,rv:23, prices:[{s:"100g",p:85,m:105},{s:"250g",p:190,m:240}]},
+    {id:14, name:"Mustard Powder",        img:"images/mustard.jpg",            e:"🟡", badge:null, r:4.0,rv:8,  prices:[{s:"100g",p:40,m:55},{s:"250g",p:90,m:120}]},
+  ]
+};
+
+// ═══════════════════════════════════
+// RENDER
+// ═══════════════════════════════════
+function stars(r){
+  const full=Math.floor(r);
+  const half=r%1>=.5?1:0;
+  return '★'.repeat(full)+(half?'½':'')+'☆'.repeat(5-full-half);
+}
+function pct(p,m){return Math.round((1-p/m)*100)}
+function getP(id){for(const c of Object.values(PRODS)){const p=c.find(x=>x.id===id);if(p)return p}return null}
+
+function renderCard(p,delay){
+  const badge=p.badge?`<div class="pbadge b-${p.badge.toLowerCase()}">${p.badge}</div>`:'';
+  const rows=p.prices.map((t,i)=>`
+    <div class="prow${i===0?' sel':''}" onclick="selRow(this)" data-pid="${p.id}" data-sz="${t.s}" data-pr="${t.p}">
+      <div class="pr-dot"></div>
+      <span class="pr-sz">${t.s}</span>
+      <div class="pr-r"><span class="pr-p">₹${t.p}</span><span class="pr-m">₹${t.m}</span><span class="pr-s">-${pct(t.p,t.m)}%</span></div>
+    </div>`).join('');
+
+  const imgContent = p.img
+    ? `<img class="pphoto" src="${p.img}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><div class="pemoji" style="display:none">${p.e||'🌶️'}</div>`
+    : `<div class="pemoji">${p.e||'🌶️'}</div>`;
+
+  return `
+  <div class="pcard sa up" style="transition-delay:${delay}s">
+    <div class="pimg">
+      ${imgContent}
+      ${badge}
+      <button class="wbtn" onclick="toggleWish(this)">♡</button>
+    </div>
+    <div class="pbody">
+      <div class="pname">${p.name}</div>
+      <div class="pstars">${stars(p.r)} <span>(${p.rv})</span></div>
+      <div class="ptable">${rows}</div>
+      <button class="add-btn" id="ab-${p.id}" onclick="addToCart(${p.id},this)">🛒 Add to Cart</button>
+    </div>
+  </div>`;
+}
+
+function renderAll(){
+  Object.entries(PRODS).forEach(([cat,arr])=>{
+    document.getElementById('g-'+cat).innerHTML=arr.map((p,i)=>renderCard(p,(i%4)*0.07)).join('');
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.pcard.sa').forEach(el=>saObs.observe(el));
+  },60);
+}
+
+// ═══════════════════════════════════
+// CART STATE
+// ═══════════════════════════════════
+let cart=[];
+
+function selRow(row){
+  row.closest('.ptable').querySelectorAll('.prow').forEach(r=>r.classList.remove('sel'));
+  row.classList.add('sel');
+}
+function toggleWish(btn){
+  btn.classList.toggle('liked');
+  btn.textContent=btn.classList.contains('liked')?'♥':'♡';
+}
+
+function addToCart(pid,btn){
+  const card=btn.closest('.pcard');
+  const row=card.querySelector('.prow.sel');
+  if(!row)return;
+  const sz=row.dataset.sz,pr=parseInt(row.dataset.pr),p=getP(pid),key=pid+'-'+sz;
+  const ex=cart.find(i=>i.key===key);
+  if(ex){ex.qty++}else{cart.push({key,pid,name:p.name,img:p.img||null,e:p.e||'🌶️',sz,pr,qty:1})}
+  updBadge();refreshCart();
+  showToast('✅ '+p.name+' ('+sz+') added!');
+  btn.innerHTML='✅ Added!';btn.classList.add('done');
+  setTimeout(()=>{btn.innerHTML='🛒 Add to Cart';btn.classList.remove('done')},1600);
+}
+
+function chQty(key,d){
+  const i=cart.find(x=>x.key===key);if(!i)return;
+  i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.key!==key);
+  updBadge();refreshCart();
+}
+function delItem(key){cart=cart.filter(x=>x.key!==key);updBadge();refreshCart()}
+function updBadge(){document.getElementById('cc').textContent=cart.reduce((a,i)=>a+i.qty,0)}
+function subTotal(){return cart.reduce((a,i)=>a+i.pr*i.qty,0)}
+function shipping(s){return s>=499?0:60}
+
+function refreshCart(){
+  const wrap=document.getElementById('cartItems'),sum=document.getElementById('csum');
+  if(cart.length===0){
+    wrap.innerHTML='<div class="cempty"><span>🛒</span><p>Your cart is empty</p></div>';
+    sum.style.display='none';
+  } else {
+    wrap.innerHTML='<div class="citems">'+cart.map(it=>`
+      <div class="ci2">
+        <div class="ciem">${it.img?`<img src="${it.img}" alt="${it.name}" onerror="this.style.display='none';this.parentNode.textContent='${it.e}'" style="width:100%;height:100%;object-fit:cover;border-radius:9px">`:`${it.e}`}</div>
+        <div class="cin">
+          <div class="cin-nm">${it.name}</div>
+          <span class="cin-sz">${it.sz}</span>
+          <div class="cin-pr">₹${it.pr*it.qty} <span style="font-size:.63rem;color:var(--text3);font-weight:400">(₹${it.pr}×${it.qty})</span></div>
+          <div class="cin-ctrl">
+            <button class="qbtn" onclick="chQty('${it.key}',-1)">−</button>
+            <span class="qv">${it.qty}</span>
+            <button class="qbtn" onclick="chQty('${it.key}',1)">+</button>
+          </div>
+        </div>
+        <button class="cdel" onclick="delItem('${it.key}')">🗑️</button>
+      </div>`).join('')+'</div>';
+    const s=subTotal(),sh=shipping(s);
+    document.getElementById('s-sub').textContent='₹'+s;
+    document.getElementById('s-ship').textContent=sh===0?'Free 🎉':'₹'+sh;
+    document.getElementById('s-tot').textContent='₹'+(s+sh);
+    sum.style.display='block';
+  }
+  const mn=document.getElementById('mnsum');
+  if(mn){
+    const s=subTotal(),sh=shipping(s);
+    mn.innerHTML=(cart.length===0?'<div style="font-size:.78rem;color:var(--text3);text-align:center;padding:6px 0">Cart is empty</div>':
+      cart.map(it=>`<div class="msr"><span>${it.name} ×${it.qty} (${it.sz})</span><span>₹${it.pr*it.qty}</span></div>`).join(''))+
+      `<div class="msr tot"><span>Total incl. shipping</span><span>₹${s+sh}</span></div>`;
+  }
+}
+
+function openCart(){
+  document.getElementById('csb').classList.add('open');
+  document.getElementById('ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('csb').classList.remove('open');
+  document.getElementById('ov').classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchTab(t){
+  ['cart','chk'].forEach(x=>{
+    document.getElementById('ctab-'+x).classList.toggle('act',x===t);
+    document.getElementById('p-'+x).classList.toggle('act',x===t);
+  });
+  if(t==='chk')refreshCart();
+}
+
+// ═══════════════════════════════════
+// MOBILE NAV
+// ═══════════════════════════════════
+function toggleMobNav(){
+  const nav=document.getElementById('mobNav');
+  const btn=document.getElementById('hamBtn');
+  const isOpen=nav.classList.toggle('open');
+  btn.classList.toggle('open',isOpen);
+  document.body.style.overflow=isOpen?'hidden':'';
+}
+function closeMobNav(){
+  document.getElementById('mobNav').classList.remove('open');
+  document.getElementById('hamBtn').classList.remove('open');
+  document.body.style.overflow='';
+}
+// Close mobile nav on outside click
+document.addEventListener('click',e=>{
+  const nav=document.getElementById('mobNav');
+  const btn=document.getElementById('hamBtn');
+  if(nav.classList.contains('open')&&!nav.contains(e.target)&&!btn.contains(e.target)){
+    closeMobNav();
+  }
+});
+
+// ═══════════════════════════════════
+// CHECKOUT
+// ═══════════════════════════════════
+function placeOrder(){
+  const n=document.getElementById('co-name').value.trim();
+  const ph=document.getElementById('co-phone').value.trim();
+  const addr=document.getElementById('co-addr').value.trim();
+  const city=document.getElementById('co-city').value.trim();
+  const pin=document.getElementById('co-pin').value.trim();
+  if(!n||!ph||!addr||!city||!pin){showToast('⚠️ Please fill all required fields');return}
+  if(cart.length===0){showToast('⚠️ Your cart is empty');return}
+  const oid='SRM-'+Date.now().toString().slice(-5);
+  document.getElementById('mod-oid').textContent='ORDER #'+oid;
+  closeCart();
+  setTimeout(()=>document.getElementById('modov').classList.add('open'),320);
+  cart=[];updBadge();refreshCart();
+}
+function closeModal(){
+  document.getElementById('modov').classList.remove('open');
+}
+
+function orderWA(){
+  if(cart.length===0){showToast('⚠️ Your cart is empty');return}
+  const n=document.getElementById('co-name').value||'Customer';
+  const addr=document.getElementById('co-addr').value||'—';
+  const s=subTotal(),sh=shipping(s);
+  let msg='🛒 *New Order – SRM Masale*\n\n*Name:* '+n+'\n*Address:* '+addr+'\n\n*Items:*\n';
+  cart.forEach(i=>{msg+='• '+i.name+' ('+i.sz+') ×'+i.qty+' = ₹'+(i.pr*i.qty)+'\n'});
+  msg+='\n*Subtotal:* ₹'+s+'\n*Shipping:* '+(sh===0?'Free':'₹'+sh)+'\n*Total:* ₹'+(s+sh);
+  window.open('https://wa.me/919876543210?text='+encodeURIComponent(msg),'_blank');
+}
+
+// ═══════════════════════════════════
+// CATEGORY FILTER
+// ═══════════════════════════════════
+function filterCat(cat,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  ['mirchi','masale'].forEach(s=>{
+    const sec=document.getElementById(s);
+    const sdiv=sec.previousElementSibling;
+    const show=(cat==='all'||cat===s);
+    sec.style.display=show?'block':'none';
+    if(sdiv&&sdiv.classList.contains('sdiv'))sdiv.style.display=show?'flex':'none';
+  });
+  if(cat!=='all')setTimeout(()=>document.getElementById(cat).scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
+
+// ═══════════════════════════════════
+// CONTACT FORM
+// ═══════════════════════════════════
+function handleContact(e){
+  if(e.target.action.includes('https://formspree.io/f/xgonrlogD')){
+    e.preventDefault();showToast('https://formspree.io/f/xgonrlog');return;
+  }
+  showToast("✅ Message sent! We'll reply within 24 hours.");
+}
+
+// ═══════════════════════════════════
+// TOAST
+// ═══════════════════════════════════
+let _tt;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('on'),2800);
+}
+
+// ═══════════════════════════════════
+// SCROLL ANIMATIONS
+// ═══════════════════════════════════
+const saObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');saObs.unobserve(e.target)}});
+},{threshold:0.08,rootMargin:'0px 0px -24px 0px'});
+
+const gpObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      gpObs.unobserve(e.target);
+      if(e.target.id==='stats'){
+        e.target.querySelectorAll('.stat-n[data-t]').forEach(el=>{
+          const target=parseInt(el.dataset.t),isP=target===100;
+          const start=performance.now();
+          function step(now){
+            const prog=Math.min((now-start)/1400,1);
+            const v=Math.round((1-Math.pow(1-prog,3))*target);
+            el.textContent=v+(isP?'%':'+');
+            if(prog<1)requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }
+    }
+  });
+},{threshold:0.15});
+
+// Hero animations — immediate
+setTimeout(()=>{
+  document.querySelectorAll('.hero .sa').forEach(el=>{el.classList.add('vis')});
+},100);
+
+document.querySelectorAll('.sa').forEach(el=>{
+  if(!el.closest('.hero'))saObs.observe(el);
+});
+
+['trust','stats','pills'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)gpObs.observe(el);
+});
+document.querySelectorAll('.pills,.cinfo').forEach(el=>gpObs.observe(el));
+
+// Active nav on scroll
+const navSecs=['mirchi','masale','about','contact'];
+const navLinks=document.querySelectorAll('nav a, .mob-nav a');
+const navObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('act'));
+      document.querySelectorAll(`nav a[href="#${e.target.id}"], .mob-nav a[href="#${e.target.id}"]`).forEach(l=>l.classList.add('act'));
+    }
+  });
+},{threshold:0.35});
+navSecs.forEach(id=>{const el=document.getElementById(id);if(el)navObs.observe(el)});
+
+// Hero parallax
+const ring=document.querySelector('.hero-ring');
+if(ring){
+  window.addEventListener('scroll',()=>{ring.style.transform=`translateY(${window.scrollY*.1}px)`},{passive:true});
+}
+
+// Floating particles
+(function(){
+  const c=document.getElementById('particles');
+  if(!c)return;
+  const cols=['rgba(245,166,35,.18)','rgba(232,98,26,.14)','rgba(184,52,10,.1)'];
+  for(let i=0;i<12;i++){
+    const d=document.createElement('div');
+    const sz=3+Math.random()*7;
+    d.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;left:${Math.random()*100}%;bottom:${Math.random()*25}%;background:${cols[i%3]};animation:floatP ${5+Math.random()*6}s ${Math.random()*7}s ease-in-out infinite`;
+    c.appendChild(d);
+  }
+  const s=document.createElement('style');
+  s.textContent=`@keyframes floatP{0%{opacity:0;transform:translateY(0) scale(.8)}15%{opacity:1}85%{opacity:.6}100%{opacity:0;transform:translateY(-100px) rotate(180deg) scale(1.2)}}`;
+  document.head.appendChild(s);
+})();
+
+// Init
+renderAll();
+refreshCart();
+</script>
+</body>
+</html>
